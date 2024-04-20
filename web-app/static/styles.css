@@ -5,7 +5,7 @@ header h1 {
     font-weight: 600;
     border-radius: 8px;
     background: transparent;
-    background-image: linear-gradient(to left, #23fa8b, #e3ff0b, #fab20a); /* Orange to green gradient */
+    background-image: linear-gradient(to left, #fa2323, #ffd20b, #eefa0a); /* Orange to green gradient */
     color: transparent;
     background-clip: text;
     -webkit-background-clip: text;
@@ -22,7 +22,7 @@ body, html {
     margin: 0;
     padding: 0;
     font-family: 'Arial', sans-serif;
-    background: url('./background2.webp') no-repeat center center fixed;
+    background: url('./img_placeholder.png') no-repeat center center fixed;
     background-color: rgba(255, 255, 255, 0.5); /* White with 50% opacity */
     backdrop-filter: blur(5px);
     background-size: cover;
@@ -75,14 +75,14 @@ body, html {
   }
 
   .custom-div h1, .custom-div label{
-    background: linear-gradient(to left, #23fa8b, #e3ff0b, #fab20a); /* Orange to green gradient */
+    background: linear-gradient(to left, #fa2723, #ff950b, #fafa0a); /* Orange to green gradient */
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent; /* Makes the text itself transparent, showing the background */
   }
 
   .gradient-text {
-    background: linear-gradient(to left, #23fa8b, #e3ff0b, #fab20a); /* Yellow to green gradient */
+    background: linear-gradient(to left, #fa2323, #ffa10b, #f6fa0a); /* Yellow to green gradient */
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent; /* Makes the text itself transparent, showing the background */

@@ -151,47 +151,33 @@ def history():
 
     return render_template("history.html", captions=captions)
 
-# Route to handle image uploads
-@app.route('/upload', methods=['GET', 'POST'])
+# Route to display mathematics topics
+@app.route('/learn', methods=['GET'])
 @login_required
-def upload_image():
+def learn_mathematics():
+    # Define a list of mathematics topics
+    math_topics = [
+        "Algebra",
+        "Calculus",
+        "Geometry",
+        "Trigonometry",
+        "Statistics",
+        "Probability",
+        "Number Theory",
+        "Differential Equations",
+        "Linear Algebra",
+        "Discrete Mathematics"
+    ]
 
-    # Handle POST request
-    if request.method == 'POST':
+    # Render the learn.html template, passing in the math_topics list
+    return render_template('learn.html', math_topics=math_topics)
 
-        # Check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url) # redirect to the same url
-        
-        file = request.files['file']
-
-        # If user does not select file, browser also submits an empty part without filename
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url) # redirect to the same url
-        
-        # If file is valid, save it to the upload folder
-        if file and allowed_file(file.filename, ALLOWED_EXTENSIONS):
-            filename = secure_filename(file.filename)
-            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(file_path)
-            
-            # Generate caption for the image
-            caption = caption_image(file_path) # defined in model.py
-
-            # Store the image path and caption in the database
-            user_id = session['user_id']  # Assuming you have user authentication set up
-            conn = get_db_connection("users.db")
-            conn.execute('INSERT INTO captions (user_id, image_path, caption_text) VALUES (?, ?, ?)',
-                         (user_id, file_path, caption))
-            conn.commit()
-            conn.close()
-
-            # Provide the caption to the template for display
-            return render_template('upload.html', caption=caption, image_url=file_path)
-
-    return render_template('upload.html')
+@app.route('/start_chat/<topic>', methods=['GET'])
+@login_required
+def start_chat(topic):
+    # Start a chat session with the AI chatbot about the given topic
+    # This functionality needs to be implemented
+    return render_template('chat.html', topic=topic)
 
 @app.route("/clear_history", methods=["POST"])
 @login_required

@@ -11,11 +11,11 @@
         <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"></script>
 
         <!-- https://favicon.io/emoji-favicons/money-bag/ -->
-        <link href="/static/favicon.ico" rel="icon">
+        <link href="/static/favicon_io/favicon.ico" rel="icon">
 
         <link href="/static/styles.css" rel="stylesheet">
 
-        <title>Pixtales: {% block title %}{% endblock %}</title>
+        <title>OpenMath: {% block title %} {% endblock %}</title>
 
     </head>
     
@@ -33,10 +33,10 @@
                         <a class="nav-link" href="/contact">Contact Us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/upload">Captioning</a>
+                        <a class="nav-link" href="/learn">Learn</a>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/history">History</a>
+                        <a class="nav-link" href="/history">Profile</a>
                     </li>
                     <!-- The Log Out link should only be visible if the user is logged in -->
                     {% if session.user_id %}
