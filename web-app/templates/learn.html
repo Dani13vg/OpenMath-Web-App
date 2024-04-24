@@ -10,11 +10,10 @@
     <p>Select a topic below to start learning with the AI chatbot:</p>
     <ul>
         {% for topic in math_topics %}
-            <!-- Each topic is a link that, when clicked, would initiate a chat with the AI chatbot -->
-            <li><a href="{{ url_for('start_chat', topic=topic) }}" class="gradient-text">{{ topic }}</a></li>
+            <!-- The URL for each topic is generated using the url_for function -->
+            <li><a href="{{ url_for('chat', topic=topic) }}" class="gradient-text">{{ topic }}</a></li>
         {% endfor %}
     </ul>
 </div>
 
 {% endblock %}
-

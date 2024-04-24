@@ -1,13 +1,13 @@
 import os
 import sqlite3
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
-
 from transformers import BlipProcessor, BlipForConditionalGeneration
 from PIL import Image
 from helpers import login_required, get_db_connection, allowed_file
+from groq_api import get_model_response
 
 # Configure application
 app = Flask(__name__)
@@ -75,7 +75,7 @@ def login():
 
         # Redirect user to home page
         flash("You have successfully logged in")
-        return redirect("/upload")
+        return redirect("/learn")
     else:
         return render_template("login.html")
     
@@ -139,17 +139,11 @@ def contact():
     """Show contact page"""
     return render_template("contact.html")
 
-@app.route("/history")
+@app.route("/profile")
 @login_required
-def history():
-    """Show history page"""
-
-    # Query database for captions
-    conn = get_db_connection("users.db")
-    captions = conn.execute("SELECT * FROM captions WHERE user_id = ?", (session["user_id"],)).fetchall()
-    conn.close()
-
-    return render_template("history.html", captions=captions)
+def profile():
+    """Show user profile"""
+    return render_template("profile.html")
 
 # Route to display mathematics topics
 @app.route('/learn', methods=['GET'])
@@ -172,28 +166,20 @@ def learn_mathematics():
     # Render the learn.html template, passing in the math_topics list
     return render_template('learn.html', math_topics=math_topics)
 
-@app.route('/start_chat/<topic>', methods=['GET'])
+@app.route('/chat/<topic>', methods=['GET', 'POST'])
 @login_required
-def start_chat(topic):
-    # Start a chat session with the AI chatbot about the given topic
-    # This functionality needs to be implemented
-    return render_template('chat.html', topic=topic)
+def chat(topic):
+    if request.method == 'POST':
+        user_input = request.form['user_input']
+        
+        # Generate a response using the updated function from your inference script
+        response = get_model_response(user_input)
 
-@app.route("/clear_history", methods=["POST"])
-@login_required
-def clear_history():
-    """Clear the user's history"""
+        return jsonify({'response': response})
+    
+    # On GET request, just render the chat page with the initial topic
+    return render_template('chat.html', initial_topic=topic)
 
-    user_id = session['user_id']
-
-    # Open a new database connection and delete the user's history
-    conn = get_db_connection('users.db')
-    conn.execute("DELETE FROM captions WHERE user_id = ?", (user_id,))
-    conn.commit()
-    conn.close()
-
-    flash("History cleared successfully", "info")
-    return redirect(url_for('history'))
 
 
 if __name__ == '__main__':
