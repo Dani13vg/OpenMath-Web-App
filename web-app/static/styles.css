@@ -5,7 +5,7 @@ header h1 {
     font-weight: 600;
     border-radius: 8px;
     background: transparent;
-    background-image: linear-gradient(to left, #fa2323, #ffd20b, #eefa0a); /* Orange to green gradient */
+    background-image: linear-gradient(to left, #fa2323, #ffd20b, #efefef); /* Orange to green gradient */
     color: transparent;
     background-clip: text;
     -webkit-background-clip: text;
@@ -13,7 +13,7 @@ header h1 {
   }
 
   .transparent-black-bg {
-    background-color: rgba(0, 0, 0, 0.5); /* Black with 50% opacity */
+    background-color: rgba(76, 76, 76, 0.5); /* Black with 50% opacity */
     color: white; /* Ensures text is light on the dark background */
     text-align: center; /* Center text */
   }
@@ -22,7 +22,7 @@ body, html {
     margin: 0;
     padding: 0;
     font-family: 'Arial', sans-serif;
-    background: url('./img_placeholder.png') no-repeat center center fixed;
+    /*: url('./img_placeholder.png') no-repeat center center fixed;
     background-color: rgba(255, 255, 255, 0.5); /* White with 50% opacity */
     backdrop-filter: blur(5px);
     background-size: cover;
@@ -75,14 +75,14 @@ body, html {
   }
 
   .custom-div h1, .custom-div label{
-    background: linear-gradient(to left, #fa2723, #ff950b, #fafa0a); /* Orange to green gradient */
+    background: linear-gradient(to left, #fa2723, #ff950b, #000000); /* Orange to green gradient */
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent; /* Makes the text itself transparent, showing the background */
   }
 
   .gradient-text {
-    background: linear-gradient(to left, #fa2323, #ffa10b, #f6fa0a); /* Yellow to green gradient */
+    background: linear-gradient(to left, #fa2323, #ffa10b, #000000); /* Yellow to green gradient */
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent; /* Makes the text itself transparent, showing the background */
@@ -100,4 +100,39 @@ body, html {
     height: auto; /* Maintain aspect ratio */
     display: block; /* Needed to apply auto margins */
     margin: 0 auto; /* Center the image horizontally */
+  }
+
+  /* Chatbot styling */
+
+  .chat-container {
+    width: 80%;
+    margin: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    position: relative;
+    min-height: 500px;
+  }
+  #chat-box {
+      margin-bottom: 50px;
+      overflow: auto;
+      height: 400px;
+      border: 1px solid #000;
+      padding: 10px;
+  }
+  #chat-form {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+  }
+  .user-message, .model-response {
+      padding: 5px;
+      border-radius: 5px;
+  }
+  .user-message {
+      background-color: #daf8cb;
+      margin-right: 50%;
+  }
+  .model-response {
+      background-color: #f1f0f0;
+      margin-left: 50%;
   }

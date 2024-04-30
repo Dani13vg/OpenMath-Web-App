@@ -1,6 +1,8 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 <div class="chat-container">
     <h1 class="gradient-text">AI Mathematics Tutor</h1>
     <div id="chat-box">
@@ -27,7 +29,6 @@ function sendMessage(event) {
     let userInputField = document.getElementById('user-input');
     let chatBox = document.getElementById('chat-box');
 
-    // Fetch API to send user input to the Flask /chat route
     fetch('/chat/${topicField.value}', {
         method: 'POST',
         body: new URLSearchParams({
@@ -39,13 +40,9 @@ function sendMessage(event) {
     })
     .then(response => response.json())
     .then(data => {
-        // Append user message to chat
         chatBox.innerHTML += `<div class='user-message'>${userInputField.value}</div>`;
-        // Append model response to chat
         chatBox.innerHTML += `<div class='model-response'>${data.response}</div>`;
-        // Clear the input field for the next message
         userInputField.value = '';
-        // Scroll to the bottom of the chat box
         chatBox.scrollTop = chatBox.scrollHeight;
     })
     .catch(error => console.error('Error:', error));

@@ -7,7 +7,7 @@ from werkzeug.utils import secure_filename
 from transformers import BlipProcessor, BlipForConditionalGeneration
 from PIL import Image
 from helpers import login_required, get_db_connection, allowed_file
-from groq_api import get_model_response
+from groq_api import get_model_response, format_response
 
 # Configure application
 app = Flask(__name__)
@@ -139,11 +139,35 @@ def contact():
     """Show contact page"""
     return render_template("contact.html")
 
-@app.route("/profile")
+@app.route("/profile", methods=["GET", "POST"])
 @login_required
 def profile():
-    """Show user profile"""
-    return render_template("profile.html")
+    conn = get_db_connection("users.db")
+    if request.method == "POST":
+        # Here you could retrieve additional form data for updating the user profile
+        username = request.form['username']
+        # More fields can be added as needed
+
+        # Update user information in the database
+        try:
+            conn.execute("UPDATE users SET username = ? WHERE id = ?", (username, session['user_id']))
+            conn.commit()
+            flash("Profile updated successfully", "info")
+        except Exception as e:
+            flash("Error updating profile: " + str(e), "error")
+        finally:
+            conn.close()
+        
+        return render_template("profile.html", user={'username': username})
+    else:
+        # Fetch current user information from the database
+        user = conn.execute("SELECT * FROM users WHERE id = ?", (session['user_id'],)).fetchone()
+        conn.close()
+        if user:
+            return render_template("profile.html", user=user)
+        else:
+            flash("User not found", "error")
+            return redirect(url_for('index'))
 
 # Route to display mathematics topics
 @app.route('/learn', methods=['GET'])
@@ -171,15 +195,27 @@ def learn_mathematics():
 def chat(topic):
     if request.method == 'POST':
         user_input = request.form['user_input']
+
+        # Initialize or retrieve history from session
+        if 'history' not in session:
+            session['history'] = []
         
-        # Generate a response using the updated function from your inference script
-        response = get_model_response(user_input)
+        if user_input == "":
+            return jsonify({'response': "Please enter a message."})
+        
+        # Generate a response using the updated function with memory
+        response = get_model_response(user_input, session['history'])
+
+        # Format the response to replace **text** with bold text
+        response = format_response(response)
+
+        # Save user input and bot response to session for memory
+        session['history'].append({'role': 'user', 'content': user_input})
+        session['history'].append({'role': 'assistant', 'content': response})
 
         return jsonify({'response': response})
-    
-    # On GET request, just render the chat page with the initial topic
-    return render_template('chat.html', initial_topic=topic)
 
+    return render_template('chat.html', initial_topic=topic)
 
 
 if __name__ == '__main__':
