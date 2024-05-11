@@ -4,8 +4,6 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='learn_styles.css') }}">
 
 <div class="custom-div">
-    <h1 class="gradient-text">Choose a Mathematics Topic</h1>
-    <p>Select a topic below to start learning with the AI chatbot:</p>
     <div class="topics-container">
         {% for topic in math_topics %}
         <div class="topic-card">
