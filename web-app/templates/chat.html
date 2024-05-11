@@ -40,8 +40,8 @@ function sendMessage(event) {
     })
     .then(response => response.json())
     .then(data => {
-        chatBox.innerHTML += `<div class='user-message'>${userInputField.value}</div>`;
-        chatBox.innerHTML += `<div class='model-response'>${data.response}</div>`;
+        chatBox.innerHTML += `<div class='user-message'>You: ${userInputField.value}</div>`;
+        chatBox.innerHTML += `<div class='model-response'>MathBot: ${data.response}</div>`;
         userInputField.value = '';
         chatBox.scrollTop = chatBox.scrollHeight;
     })

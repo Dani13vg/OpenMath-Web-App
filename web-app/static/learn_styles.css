@@ -1,26 +1,26 @@
 .topics-container {
     display: flex;
-    flex-direction: row; /* This should keep items horizontal */
-    flex-wrap: nowrap; /* Prevents wrapping to ensure a horizontal scroll */
-    overflow-x: auto; /* Allows horizontal scrolling */
-    justify-content: flex-start; /* Aligns items to the start */
-    align-items: center; /* Centers items vertically */
-    padding: 20px;
-    gap: 20px;
-    margin: 0 auto;
-    width: 100%; /* Full width to allow proper spacing and scrolling */
+    flex-direction: row;
+    flex-wrap: wrap; /* This will allow cards to move to the next line on smaller screens */
+    justify-content: space-around; /* This will distribute space around items evenly */
+    align-items: center;
+    padding: 20px; /* Adds space around the container */
+    gap: 20px; /* Adds space between cards */
+    /*margin: 0 auto; /* Centers the container, to put it full to the left, remove this line */
+    width: 200%; /* Ensures the container uses full width */
 }
 
 .topic-card {
-    min-width: 300px; /* Minimum width for each card */
-    border: 1px solid #4a90e2; /* Lighter blue border */
+    flex: 1 1 23%; /* Each card can grow and shrink but starts with 23% of the container's width */
+    max-width: 23%; /* Ensures cards do not exceed this percentage of container's width */
+    border: 1px solid #4a90e2;
     border-radius: 8px;
     overflow: hidden;
     text-align: center;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     transition: transform 0.2s ease-in-out;
     background-color: #1e4356; /* Dark blue background */
-    color: #ffffff; /* Ensures text color is white for accessibility */
+    color: #ffffff; /* White text */
 }
 
 .topic-card:hover {
@@ -37,7 +37,7 @@
 .topic-card h3 {
     margin: 0;
     padding: 15px;
-    background-color: #4a90e2; /* Light blue background for the title */
+    background-color: #5394e0; /* Light blue background for the title */
     color: #ffffff; /* White text */
 }
 

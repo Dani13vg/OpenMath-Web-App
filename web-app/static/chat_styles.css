@@ -55,9 +55,10 @@
 
 /* Styles for messages */
 .user-message, .model-response {
+
     padding: 10px;
     border-radius: 10px;
-    width: 100%; /* Make messages occupy the full width of the chat box */
+     /*width: 100%; Make messages occupy the full width of the chat box */
     box-sizing: border-box; /* Includes padding and border in width */
     margin-bottom: 10px; /* Adds spacing between messages */
     clear: both; /* Handling float */
@@ -65,10 +66,12 @@
 
 .user-message {
     background-color: #dbf0f1; /* Light teal background */
-    text-align: left; /* Aligns text to the right */
+    text-align: right; /* Aligns text to the middle */
+    width: 20%;
 }
 
 .model-response {
     background-color: #d1e8e2; /* Light green background */
-    text-align: left; /* Aligns text to the left */
+    text-align: left; /* Aligns text to the middle */
+    width: 100%;
 }

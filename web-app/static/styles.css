@@ -30,7 +30,7 @@ body, html {
   
   .navbar {
     padding: 10px 20px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(146, 229, 252, 0.1);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
@@ -49,14 +49,14 @@ body, html {
   
   .nav-links a {
     text-decoration: none;
-    color: white;
+    color: rgb(147, 252, 244);
     font-size: 18px;
     font-weight: bold;
     transition: color 0.3s ease-in-out;
   }
   
   .nav-links a:hover {
-    color: #e0e0e0;
+    color: #6ebbff;
   }
 
   .form-control {
