@@ -147,25 +147,36 @@ def register():
         return render_template("register.html")
 
 
-
 @app.route("/form", methods=["GET", "POST"])
 @login_required
 def form():
     if request.method == "POST":
         full_name = request.form.get("full_name")
-        age = request.form.get("age")
+        age = int(request.form.get("age"))  # Ensure age is correctly formatted as integer
         likes = request.form.getlist("likes")  # Retrieves all values from checkboxes named 'likes'
-        learning_preference = request.form.get("learning_preference")  # Retrieves the slider value
+        learning_preference = int(request.form.get("learning_preference"))  # Retrieves the slider value as integer
 
-        # Save this information to your database or process it as needed
-        # Placeholder for database save operation
+        # Save this information to your database
+        conn = get_db_connection("users.db")
+        cursor = conn.cursor()
+        try:
+            # Update the user's data in the database
+            cursor.execute("UPDATE users SET full_name = ?, age = ?, likes = ?, learning_preference = ? WHERE id = ?", 
+                           (full_name, age, ','.join(likes), learning_preference, session['user_id']))
+            conn.commit()
+            flash("Information saved successfully!")
+        except Exception as e:
+            conn.rollback()
+            flash(f"An error occurred: {str(e)}", "error")
+        finally:
+            conn.close()
 
-        # Redirect to another page upon successful submission, maybe to user profile
-        flash("Information saved successfully!")
-        return redirect(url_for("login"))
+        # Redirect to user profile upon successful submission
+        return redirect(url_for("profile"))
+    else:
+        # Render the form page if the request is GET
+        return render_template("form.html")
 
-    # GET request just renders the form
-    return render_template("form.html")
 
 @app.route("/profile", methods=["GET", "POST"])
 @login_required
@@ -174,34 +185,25 @@ def profile():
     cursor = conn.cursor()
     if request.method == "POST":
         username = request.form['username']
-        likes = ','.join(request.form.getlist('likes'))  # Convert list to comma-separated string
-        # Additional form processing logic...
+        age = request.form['age']
+        likes = ','.join(request.form.getlist('likes'))
+        learning_preference = request.form['learning_preference']
 
         try:
-            cursor.execute("UPDATE users SET username = ?, likes = ? WHERE id = ?", 
-                           (username, likes, session['user_id']))
+            cursor.execute("UPDATE users SET username = ?, age = ?, likes = ?, learning_preference = ? WHERE id = ?", 
+                           (username, age, likes, learning_preference, session['user_id']))
             conn.commit()
             flash("Profile updated successfully", "info")
-        except Exception as e:
-            flash(f"Error updating profile: {str(e)}", "error")
         finally:
             conn.close()
 
         return redirect(url_for('profile'))
     else:
         cursor.execute("SELECT * FROM users WHERE id = ?", (session['user_id'],))
-        user_row = cursor.fetchone()
+        user = dict(cursor.fetchone())
+        user['likes'] = user['likes'].split(',') if user['likes'] else []
         conn.close()
-        
-        if user_row:
-            # Convert sqlite3.Row to a dict to modify and use it in the template
-            user = dict(user_row)
-            user['likes'] = user['likes'].split(',') if user['likes'] else []
-            return render_template("profile.html", user=user)
-        else:
-            flash("User not found", "error")
-            return redirect(url_for('index'))
-
+        return render_template("profile.html", user=user)
 
 # Route to display mathematics topics
 @app.route('/learn', methods=['GET'])
@@ -244,7 +246,7 @@ def chat(topic):
             return jsonify({'response': "Please enter a message."})
         
         # Generate a response using the updated function with memory
-        response = get_model_response(user_input, session['history'])
+        response = get_model_response(user_input, session['history'], user_data)
 
         # Format the response to replace **text** with bold text
         response = format_response(response)
