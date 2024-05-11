@@ -217,10 +217,7 @@ def learn_mathematics():
         "Trigonometry",
         "Statistics",
         "Probability",
-        "Number Theory",
-        "Differential Equations",
-        "Linear Algebra",
-        "Discrete Mathematics"
+        "Number Theory"
     ]
 
     # Render the learn.html template, passing in the math_topics list
