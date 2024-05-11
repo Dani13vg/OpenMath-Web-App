@@ -3,6 +3,7 @@
 {% block title %} Home {% endblock %}
 
 {% block content %}
+<link href="{{ url_for('static', filename='index_styles.css') }}" rel="stylesheet">
 
 <div class="container">
     <header class="transparent-black-bg">
@@ -13,10 +14,8 @@
 
     <div class="mt-4 d-flex justify-content-center">
         <a href="{{ url_for('register') }}" class="btn btn-secondary me-3">Register</a>
-        
         <a href="{{ url_for('login') }}" class="btn btn-primary">Log In</a>
     </div>
 </div>
 
 {% endblock %}
-

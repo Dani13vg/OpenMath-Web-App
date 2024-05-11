@@ -1,0 +1,68 @@
+/* index_styles.css */
+body, html {
+    font-family: 'Arial', sans-serif;
+    background: #f0f4f8; /* Softer background color */
+}
+
+.container {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+header.transparent-black-bg h1 {
+    font-size: 48px; /* Smaller, more modern font size */
+    font-weight: bold;
+    color: #4A90E2; /* Soft blue instead of gradient */
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.2); /* Subtle text shadow for depth */
+}
+
+.logo-image {
+    width: 30%; /* Adjust based on preference */
+    margin-bottom: 30px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-secondary {
+    background-color: #6C7A89; /* Flat gray */
+    color: white;
+}
+
+.btn-primary {
+    background-color: #3498db; /* Flat blue */
+    color: white;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+.navbar {
+    background-color: #0052a4; /* Adjust the navbar background color if needed */
+    padding: 10px 20px;
+}
+
+.navbar-brand img {
+    height: 40px; /* Ensure the logo is not too large */
+}
+
+.navbar-nav {
+    margin-left: auto; /* Pushes the nav links to the right side of the navbar */
+}
+
+.nav-link {
+    color: #007bff; /* Bootstrap primary color for links */
+    margin-right: 20px; /* Space between links */
+}
+
+.nav-link:hover {
+    color: #0056b3; /* Darker blue on hover for better visibility */
+}
+
+/* Footer and additional styles as needed */

@@ -1,4 +1,3 @@
-/* FILEPATH: /Users/dani/Documents/cs50/Image-Captioning-app-web/static/styles.css */
 
 header h1 {
     font-size: 70px;
@@ -29,35 +28,26 @@ body, html {
   }
   
   .navbar {
+    background-color: #0052a4; /* Adjust the navbar background color if needed */
     padding: 10px 20px;
-    background: rgba(146, 229, 252, 0.1);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  }
-  
-  .nav-links {
-    list-style: none; /* Remove list bullets */
-    display: flex; /* Make the nav links to display inline */
-    justify-content: center; /* Horizontally center the navbar links */
-    align-items: center; /* Center the navbar links vertically */
-  }
-  
-  .nav-links li {
-    padding: 0 20px;
-  }
-  
-  .nav-links a {
-    text-decoration: none;
-    color: rgb(147, 252, 244);
-    font-size: 18px;
-    font-weight: bold;
-    transition: color 0.3s ease-in-out;
-  }
-  
-  .nav-links a:hover {
-    color: #6ebbff;
-  }
+}
+
+.navbar-brand img {
+    height: 40px; /* Ensure the logo is not too large */
+}
+
+.navbar-nav {
+    margin-left: auto; /* Pushes the nav links to the right side of the navbar */
+}
+
+.nav-link {
+    color: #007bff; /* Bootstrap primary color for links */
+    margin-right: 20px; /* Space between links */
+}
+
+.nav-link:hover {
+    color: #0056b3; /* Darker blue on hover for better visibility */
+}
 
   .form-control {
     width: 50%; /* Adjust this value as needed to make the inputs narrower */
