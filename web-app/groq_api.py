@@ -20,9 +20,10 @@ class color:
    END = '\033[0m'
 
 # Function to make an api call and get the response from the model
-def get_model_response(user_input, memory=None):
+def get_model_response(user_input, memory=None, user_data=None):
     # Make an API call to the chat endpoint
     messages = []
+    
     
     # Include past conversation history if it exists
     if memory:

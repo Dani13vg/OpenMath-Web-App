@@ -40,6 +40,16 @@ def index():
 
     return render_template("index.html")
 
+@app.route("/usage")
+def usage():
+    """Show usage page"""
+    return render_template("usage.html")
+
+@app.route("/contact")
+def contact():
+    """Show contact page"""
+    return render_template("contact.html")
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
@@ -93,81 +103,105 @@ def logout():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
-
-    # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        confirmation = request.form.get("confirmation")
 
         # Ensure username and password were submitted
-        if not request.form.get("username") or not request.form.get("password"):
+        if not username or not password:
             flash("Must provide username and password", "warning")
             return render_template("register.html")
-        
+
         # Ensure password and confirmation match
-        if request.form.get("password") != request.form.get("confirmation"):
+        if password != confirmation:
             flash("Password and confirmation must match", "warning")
             return render_template("register.html")
         
-        # Query database for username
+        # Query database for username to ensure it does not already exist
         conn = get_db_connection("users.db")
-        username = conn.execute("SELECT * FROM users WHERE username = ?", (request.form.get("username"),)).fetchone()
-        conn.close()
-
-        # Ensure username does not already exist
-        if username:
+        cur = conn.cursor()  # Create a cursor object using the connection
+        cur.execute("SELECT * FROM users WHERE username = ?", (username,))
+        user_check = cur.fetchone()
+        
+        if user_check:
+            conn.close()
             flash("Username already exists", "warning")
             return render_template("register.html")
         
-        # Insert new user into database
-        conn = get_db_connection("users.db")
-        conn.execute("INSERT INTO users (username, password) VALUES (?, ?)", (request.form.get("username"), generate_password_hash(request.form.get("password"))))
+        # Insert new user into the database
+        cur.execute("INSERT INTO users (username, password) VALUES (?, ?)", 
+                     (username, generate_password_hash(password)))
         conn.commit()
+        user_id = cur.lastrowid  # Get the last inserted ID using the cursor
         conn.close()
 
-        # Redirect user to login page
-        flash("You have successfully registered")
-        return redirect("/login")
+        # Set user_id and username in session
+        session["user_id"] = user_id
+        session["username"] = username
+
+        # Redirect user to the form page to continue registration process
+        flash("You have successfully registered. Please complete your profile.")
+        return redirect(url_for("form"))
     else:
         return render_template("register.html")
-    
-@app.route("/usage")
-def usage():
-    """Show usage page"""
-    return render_template("usage.html")
 
-@app.route("/contact")
-def contact():
-    """Show contact page"""
-    return render_template("contact.html")
+
+
+@app.route("/form", methods=["GET", "POST"])
+@login_required
+def form():
+    if request.method == "POST":
+        full_name = request.form.get("full_name")
+        age = request.form.get("age")
+        likes = request.form.getlist("likes")  # Retrieves all values from checkboxes named 'likes'
+        learning_preference = request.form.get("learning_preference")  # Retrieves the slider value
+
+        # Save this information to your database or process it as needed
+        # Placeholder for database save operation
+
+        # Redirect to another page upon successful submission, maybe to user profile
+        flash("Information saved successfully!")
+        return redirect(url_for("login"))
+
+    # GET request just renders the form
+    return render_template("form.html")
 
 @app.route("/profile", methods=["GET", "POST"])
 @login_required
 def profile():
     conn = get_db_connection("users.db")
+    cursor = conn.cursor()
     if request.method == "POST":
-        # Here you could retrieve additional form data for updating the user profile
         username = request.form['username']
-        # More fields can be added as needed
+        likes = ','.join(request.form.getlist('likes'))  # Convert list to comma-separated string
+        # Additional form processing logic...
 
-        # Update user information in the database
         try:
-            conn.execute("UPDATE users SET username = ? WHERE id = ?", (username, session['user_id']))
+            cursor.execute("UPDATE users SET username = ?, likes = ? WHERE id = ?", 
+                           (username, likes, session['user_id']))
             conn.commit()
             flash("Profile updated successfully", "info")
         except Exception as e:
-            flash("Error updating profile: " + str(e), "error")
+            flash(f"Error updating profile: {str(e)}", "error")
         finally:
             conn.close()
-        
-        return render_template("profile.html", user={'username': username})
+
+        return redirect(url_for('profile'))
     else:
-        # Fetch current user information from the database
-        user = conn.execute("SELECT * FROM users WHERE id = ?", (session['user_id'],)).fetchone()
+        cursor.execute("SELECT * FROM users WHERE id = ?", (session['user_id'],))
+        user_row = cursor.fetchone()
         conn.close()
-        if user:
+        
+        if user_row:
+            # Convert sqlite3.Row to a dict to modify and use it in the template
+            user = dict(user_row)
+            user['likes'] = user['likes'].split(',') if user['likes'] else []
             return render_template("profile.html", user=user)
         else:
             flash("User not found", "error")
             return redirect(url_for('index'))
+
 
 # Route to display mathematics topics
 @app.route('/learn', methods=['GET'])
@@ -195,7 +229,13 @@ def learn_mathematics():
 def chat(topic):
     if request.method == 'POST':
         user_input = request.form['user_input']
+        conn = get_db_connection("users.db")
+        cursor = conn.cursor()
+        user_data = cursor.execute("SELECT * FROM users WHERE id = ?", (session['user_id'],)).fetchone()
 
+        if user_data:
+            user_data = dict(user_data)
+            
         # Initialize or retrieve history from session
         if 'history' not in session:
             session['history'] = []
