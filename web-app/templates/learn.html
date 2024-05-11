@@ -1,19 +1,21 @@
 {% extends "layout.html" %}
 
 {% block content %}
-
-<br>
-<br>
+<link rel="stylesheet" href="{{ url_for('static', filename='learn_styles.css') }}">
 
 <div class="custom-div">
     <h1 class="gradient-text">Choose a Mathematics Topic</h1>
     <p>Select a topic below to start learning with the AI chatbot:</p>
-    <ul>
+    <div class="topics-container">
         {% for topic in math_topics %}
-            <!-- The URL for each topic is generated using the url_for function -->
-            <li><a href="{{ url_for('chat', topic=topic) }}" class="gradient-text">{{ topic }}</a></li>
+        <div class="topic-card">
+            <a href="{{ url_for('chat', topic=topic) }}">
+                <img src="{{ url_for('static', filename='images/' ~ topic|lower|replace(' ', '_') ~ '.png') }}" alt="{{ topic }}">
+                <h3>{{ topic }}</h3>
+            </a>
+        </div>
         {% endfor %}
-    </ul>
+    </div>
 </div>
 
 {% endblock %}
