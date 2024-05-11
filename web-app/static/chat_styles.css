@@ -1,0 +1,74 @@
+/* Chat container styles */
+.chat-container {
+    width: 80%;
+    margin: 20px auto;
+    border: 1px solid #d0e2df; /* Light blue border */
+    background-color: #f4f7f6; /* Light grey background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    position: relative;
+    min-height: 500px;
+}
+
+/* Chat box styles */
+#chat-box {
+    overflow-y: scroll;
+    height: 450px;
+    border: 2px solid #005580; /* Dark blue border */
+    background-color: #ffffff; /* White background for the chat area */
+    padding: 10px;
+    border-radius: 4px;
+}
+
+/* Chat form input and button styles */
+#chat-form {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    display: flex;
+    padding: 0 10px;
+}
+
+#chat-form input[type="text"] {
+    flex-grow: 1;
+    margin-right: 10px;
+    padding: 10px;
+    border: 2px solid #00796b; /* Teal border */
+    border-radius: 4px;
+}
+
+#chat-form button {
+    padding: 10px 20px;
+    background-color: #00796b; /* Teal background */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+#chat-form button:hover {
+    background-color: #005046;
+}
+
+/* Styles for messages */
+.user-message, .model-response {
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%; /* Make messages occupy the full width of the chat box */
+    box-sizing: border-box; /* Includes padding and border in width */
+    margin-bottom: 10px; /* Adds spacing between messages */
+    clear: both; /* Handling float */
+}
+
+.user-message {
+    background-color: #dbf0f1; /* Light teal background */
+    text-align: left; /* Aligns text to the right */
+}
+
+.model-response {
+    background-color: #d1e8e2; /* Light green background */
+    text-align: left; /* Aligns text to the left */
+}
