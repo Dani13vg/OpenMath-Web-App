@@ -14,7 +14,7 @@
 
 .topic-card {
     flex: 1 1 33%; /* Each card can grow and shrink but starts with 23% of the container's width */
-    max-width: 33%; /* Ensures cards do not exceed this percentage of container's width */
+    max-width: 100%; /* Ensures cards do not exceed this percentage of container's width */
     border: 1px solid #4a90e2;
     border-radius: 8px;
     overflow: hidden;
@@ -26,7 +26,7 @@
 }
 
 .topic-card:hover {
-    transform: scale(1.00);
+    transform: scale(1.10);
     border-color: #326985; /* Dark blue on hover */
 }
 

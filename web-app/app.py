@@ -217,11 +217,13 @@ def learn_mathematics():
         "Trigonometry",
         "Statistics",
         "Probability",
-        "Number Theory"
+        "Number Theory",
+        "Discrete Mathematics"
     ]
 
     # Render the learn.html template, passing in the math_topics list
     return render_template('learn.html', math_topics=math_topics)
+
 
 @app.route('/chat/<topic>', methods=['GET', 'POST'])
 @login_required
