@@ -4,15 +4,16 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='chat_styles.css') }}">
 
 <div class="chat-container">
-    <h1 class="gradient-text">AI Mathematics Tutor</h1>
+    <h1>MathBot</h1>
     <div id="chat-box">
         <!-- Chat messages will be displayed here -->
     </div>
     <form id="chat-form" onsubmit="sendMessage(event)">
         <input type="text" id="user-input" placeholder="Type your question..." autocomplete="off">
-        <button type="submit">Send</button>
+        <button type="submit"><b>→</b></button>
     </form>
 </div>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -26,10 +27,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function sendMessage(event) {
     event.preventDefault();
-    let userInputField = document.getElementById('user-input');
-    let chatBox = document.getElementById('chat-box');
+    const userInputField = document.getElementById('user-input');
+    const chatBox = document.getElementById('chat-box');
 
-    fetch('/chat/${topicField.value}', {
+    // Create user message element
+    let userMessage = document.createElement('div');
+    userMessage.className = 'user-message';
+    userMessage.textContent = `You: ${userInputField.value}`;
+    chatBox.appendChild(userMessage);
+
+    fetch('/chat/send', {
         method: 'POST',
         body: new URLSearchParams({
             'user_input': userInputField.value
@@ -40,13 +47,31 @@ function sendMessage(event) {
     })
     .then(response => response.json())
     .then(data => {
-        chatBox.innerHTML += `<div class='user-message'>You: ${userInputField.value}</div>`;
-        chatBox.innerHTML += `<div class='model-response'>MathBot: ${data.response}</div>`;
+        let botResponse = document.createElement('div');
+        botResponse.className = 'model-response';
+
+        // Handle paragraphs and basic markdown-like formatting
+        let formattedResponse = data.response
+            .split('\n\n') // Split response into paragraphs on double newlines
+            .map(paragraph => {
+                return '<p>' + paragraph
+                    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') // Bold
+                    .replace(/\*(.+?)\*/g, '<em>$1</em>')             // Italics
+                    .replace(/`(.+?)`/g, '<code>$1</code>')          // Code
+                    + '</p>';
+            })
+            .join(''); // Join all paragraphs back into a single string
+
+        botResponse.innerHTML = formattedResponse;
+        chatBox.appendChild(botResponse);
         userInputField.value = '';
         chatBox.scrollTop = chatBox.scrollHeight;
     })
     .catch(error => console.error('Error:', error));
 }
+
+
+
 </script>
 
 {% endblock %}

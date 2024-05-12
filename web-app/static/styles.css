@@ -28,7 +28,7 @@ body, html {
   }
   
   .navbar {
-    background-color: #0052a4; /* Adjust the navbar background color if needed */
+    background-color: #092e52; /* Adjust the navbar background color if needed */
     padding: 10px 20px;
 }
 
@@ -38,6 +38,10 @@ body, html {
 
 .navbar-nav {
     margin-left: auto; /* Pushes the nav links to the right side of the navbar */
+}
+
+.navbar-darkblue {
+  background-color: #0056b3; /* A nice dark blue shade */
 }
 
 .nav-link {

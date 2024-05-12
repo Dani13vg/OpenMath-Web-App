@@ -1,34 +1,59 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<form method="POST" action="{{ url_for('form') }}">
-    <div>
-        <label for="full_name">Full Name:</label>
-        <input type="text" id="full_name" name="full_name" required>
-    </div>
-    <div>
-        <label for="age">Age:</label>
-        <input type="number" id="age" name="age" required>
-    </div>
-    <div>
-        <label>Topics you like:</label>
-        <div>
-            {% for topic in [
-                'Sport', 'Painting', 'Climbing', 'Football', 
-                'Swimming', 'Food', 'Music', 'Dancing', 
-                'Cars', 'Computers'] %}
-            <input type="checkbox" name="likes" value="{{ topic }}">
-            <label for="likes">{{ topic }}</label><br>
-            {% endfor %}
+<link rel="stylesheet" href="{{ url_for('static', filename='profile_styles.css') }}">
+
+<div class="profile-container">
+    <h1>Fill Out Your Details</h1>
+    <form method="POST" action="{{ url_for('form') }}" class="profile-form">
+        <div class="form-section">
+            <h2>Personal Information</h2>
+            <div class="form-group">
+                <label for="full_name">Full Name:</label>
+                <input type="text" id="full_name" name="full_name" required>
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required>
+            </div>
         </div>
-    </div>
-    <div>
-        <label for="learning_preference">Learning Preference (% Theory - % Practice):</label>
-        <input type="range" id="learning_preference" name="learning_preference" min="0" max="100">
-        <span id="preference_value">50%</span> <!-- Default value -->
-    </div>
-    <button type="submit">Submit</button>
-</form>
+
+        <div class="form-section">
+            <h2>Topics you like</h2>
+            <div class="topics-container">
+                {% for topic in [
+                    'Sport', 'Painting', 'Climbing', 'Football', 
+                    'Swimming', 'Food', 'Music', 'Dancing', 
+                    'Cars', 'Computers', 'Video Games', 'Social Media',
+                    'Coding', 'Movies', 'Science Experiments', 'Music',
+                    'Crafts', 'Art', 'Sports', 'Healthy Eating', 
+                    'Photography', 'YouTube', 'Graphic Novels', 'Music Instruments',
+                    'Climate Change', 'Astronomy', 'Robotics',
+                    'Personal Finance', 'Travel', 'Study Skills',
+                    'Virtual Reality', 'Fashion', 'Writing', 'Mental Health',
+                    'Pets', 'Math Games', 'Cultural Festivals', 'History',
+                    'Survival Skills', 'Board Games'
+                ] %}
+                <label class="checkbox-label">
+                    <input type="checkbox" name="likes" value="{{ topic }}" id="like_{{ topic }}">
+                    {{ topic }}
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Learning Preferences</h2>
+            <label for="learning_preference">Learning Preference ( % Practice - % Theory):</label>
+            <input type="range" id="learning_preference" name="learning_preference" min="0" max="100">
+            <span id="preference_value">50%</span> <!-- Default value -->
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn-update">Submit</button>
+        </div>
+    </form>
+</div>
 
 <script>
 document.getElementById('learning_preference').addEventListener('input', function() {

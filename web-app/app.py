@@ -7,7 +7,7 @@ from werkzeug.utils import secure_filename
 from transformers import BlipProcessor, BlipForConditionalGeneration
 from PIL import Image
 from helpers import login_required, get_db_connection, allowed_file
-from groq_api import get_model_response, format_response
+from groq_api import get_model_response
 
 # Configure application
 app = Flask(__name__)
@@ -247,8 +247,7 @@ def chat(topic):
         # Generate a response using the updated function with memory
         response = get_model_response(user_input, session['history'], user_data)
 
-        # Format the response to replace **text** with bold text
-        response = format_response(response)
+       
 
         # Save user input and bot response to session for memory
         session['history'].append({'role': 'user', 'content': user_input})

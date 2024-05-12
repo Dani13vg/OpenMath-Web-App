@@ -1,41 +1,55 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="container">
-    <h1>Edit Profile</h1>
-    <form method="POST">
-        <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" value="{{ user.username }}" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label for="full_name">Full Name:</label>
-            <input type="text" id="full_name" name="full_name" value="{{ user.full_name }}" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label for="age">Age:</label>
-            <input type="number" id="age" name="age" value="{{ user.age }}" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label>Topics you like:</label>
-            {% for topic in [
-                'Sport', 'Painting', 'Climbing', 'Football', 
-                'Swimming', 'Food', 'Music', 'Dancing', 
-                'Cars', 'Computers'] %}
-            <div>
-                <input type="checkbox" name="likes" value="{{ topic }}" 
-                       id="like_{{ topic }}" {{ 'checked' if topic in user.likes else '' }}>
-                <label for="like_{{ topic }}">{{ topic }}</label>
+<link rel="stylesheet" href="{{ url_for('static', filename='profile_styles.css') }}">
+
+<div class="profile-container">
+    <h1>Edit Your Profile</h1>
+    <form method="POST" class="profile-form">
+        <div class="form-section">
+            <h2>Basic Information</h2>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" value="{{ user.username }}" required>
             </div>
-            {% endfor %}
+            <div class="form-group">
+                <label for="full_name">Full Name:</label>
+                <input type="text" id="full_name" name="full_name" value="{{ user.full_name }}">
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" value="{{ user.age }}" required>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="learning_preference">Learning Preference (% Theory - % Practice):</label>
+
+        <div class="form-section">
+            <h2>Interests</h2>
+            <div class="topics-container">
+                {% for topic in [
+                    'Sport', 'Painting', 'Climbing', 'Football', 'Swimming', 'Food', 'Music', 'Dancing', 
+                    'Cars', 'Computers', 'Video Games', 'Social Media', 'Coding', 'Movies', 'Science Experiments', 
+                    'Crafts', 'Art', 'Sports', 'Healthy Eating', 'Photography', 'YouTube', 'Graphic Novels', 
+                    'Music Instruments', 'Climate Change', 'Astronomy', 'Robotics', 'Personal Finance', 'Travel', 
+                    'Study Skills', 'Virtual Reality', 'Fashion', 'Writing', 'Mental Health', 'Pets', 'Math Games', 
+                    'Cultural Festivals', 'History', 'Survival Skills', 'Board Games'
+                ] %}
+                <label class="checkbox-label">
+                    <input type="checkbox" name="likes" value="{{ topic }}" id="like_{{ topic }}" {{ 'checked' if topic in user.likes else '' }}>
+                    {{ topic }}
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Learning Preferences</h2>
+            <label for="learning_preference"> % Practice - % Theory</label>
             <input type="range" id="learning_preference" name="learning_preference" min="0" max="100" value="{{ user.learning_preference }}">
             <span id="preference_value">{{ user.learning_preference }}%</span>
         </div>
+
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Update Profile</button>
+            <button type="submit" class="btn-update">Update Profile</button>
         </div>
     </form>
 </div>
@@ -45,5 +59,6 @@ document.getElementById('learning_preference').addEventListener('input', functio
     document.getElementById('preference_value').textContent = this.value + '%';
 });
 </script>
+
 
 {% endblock %}

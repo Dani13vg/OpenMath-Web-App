@@ -1,9 +1,9 @@
-/* Chat container styles */
+/*Chat container styles */
 .chat-container {
-    width: 80%;
+    width: 90%;
     margin: 20px auto;
-    border: 1px solid #d0e2df; /* Light blue border */
-    background-color: #f4f7f6; /* Light grey background */
+    border: 1px solid #d0e2df;
+    background-color: #f4f7f6;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -11,17 +11,15 @@
     min-height: 500px;
 }
 
-/* Chat box styles */
 #chat-box {
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 450px;
-    border: 2px solid #005580; /* Dark blue border */
-    background-color: #ffffff; /* White background for the chat area */
+    border: 2px solid #005580;
+    background-color: #ffffff;
     padding: 10px;
     border-radius: 4px;
 }
 
-/* Chat form input and button styles */
 #chat-form {
     position: absolute;
     bottom: 10px;
@@ -34,13 +32,13 @@
     flex-grow: 1;
     margin-right: 10px;
     padding: 10px;
-    border: 2px solid #00796b; /* Teal border */
+    border: 2px solid #00796b;
     border-radius: 4px;
 }
 
 #chat-form button {
     padding: 10px 20px;
-    background-color: #00796b; /* Teal background */
+    background-color: #00796b;
     color: white;
     border: none;
     border-radius: 4px;
@@ -53,17 +51,46 @@
     background-color: #005046;
 }
 
-/* Styles for messages */
 .user-message, .model-response {
     padding: 10px;
     border-radius: 10px;
-    width: 90%; /* Adjust width as needed */
-    margin: 10px auto; /* Center messages */
-    background-color: #dbf0f1; /* Light teal background for user messages */
-    text-align: justify; /* Justify text within messages */
-    box-sizing: border-box; /* Includes padding and border in width */
+    width: calc(100% - 20px);
+    margin: 5px auto;
+    text-align: justify;
+    box-sizing: border-box;
+}
+
+.user-message {
+    background-color: #dbf0f1;
+    align-self: flex-end;
+    text-align: left;
 }
 
 .model-response {
-    background-color: #d1e8e2; /* Light green background for model responses */
+    background-color: #d1e8e2;
+    align-self: flex-start;
+    text-align: left;
+}
+
+.model-response strong {
+    font-weight: bold; /* Makes text bold */
+    color: #000; /* Optional: Change color */
+}
+
+.model-response em {
+    font-style: italic; /* Makes text italic */
+    color: #34495e; /* Optional: Change color */
+}
+
+.model-response code {
+    font-family: monospace; /* Changes font to monospace for code */
+    background-color: #f4f4f4; /* Light grey background */
+    padding: 2px 4px; /* Padding around the code text */
+    border-radius: 4px; /* Rounded corners */
+    border: 1px solid #ccc; /* Light grey border */
+    color: #c7254e; /* Optional: Change text color */
+}
+
+.model-response p {
+    margin-bottom: 10px; /* Adjust spacing between paragraphs */
 }

@@ -1,0 +1,75 @@
+.profile-container {
+    max-width: 960px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #f8f9fa;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
+.profile-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.form-section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+h1, h2 {
+    color: #0056b3;
+}
+
+.form-group label {
+    font-weight: 600;
+}
+
+input[type="text"], input[type="number"], input[type="range"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.topics-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.checkbox-label {
+    background: #e9ecef;
+    border-radius: 20px;
+    padding: 5px 10px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.btn-update {
+    background-color: #007bff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-update:hover {
+    background-color: #0056b3;
+}
+
+#preference_value {
+    font-weight: bold;
+    color: #007bff;
+}
+
