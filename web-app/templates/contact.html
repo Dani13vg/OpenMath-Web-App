@@ -3,18 +3,30 @@
 {% block title %}Contact Us{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='contact_styles.css') }}">
 
-<div class="container">
-    <header class="transparent-black-bg">
+
+<div class="contact-container">
+    <header>
         <h1>Contact Us</h1>
     </header>
     
-    <div class="transparent-black-bg">
-        <p class="gradient-text"> If you have any questions or comments, please contact us at: </p>
-
-        <p class="gradient-text">Linkedin: <a href="https://www.linkedin.com/in/daniel-alejandro-vidal-guerra-21386b266//" target="_blank">Linkedin: Daniel Vidal</a></p>
-        <p class="gradient-text">GitHub: <a href="https://github.com/Dani13vg" target="_blank">Dani13vg</a></p>
-        <p class="gradient-text">Email: <a href="https://mail.google.com/" target="_blank">danielvidal130602@gmail.com</a> </p>
+    <div class="cards">
+        <div class="card linkedin">
+            <a href="https://www.linkedin.com/in/daniel-alejandro-vidal-guerra-21386b266//" target="_blank">
+                <img src="/static/favicon_io/favicon_io/linkedin.png" alt="LinkedIn">
+            </a>
+        </div>
+        <div class="card github">
+            <a href="https://github.com/Dani13vg/OpenMath-Web-App" target="_blank">
+                <img src="/static/favicon_io/favicon_io/github.png" alt="GitHub">
+            </a>
+        </div>
+        <div class="card email">
+            <a href="mailto:danielvidal130602@gmail.com">
+                <img src="/static/favicon_io/favicon_io/gmail.png" alt="Email">
+            </a>
+        </div>
     </div>
 </div>
 

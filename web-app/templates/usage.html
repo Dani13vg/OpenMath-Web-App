@@ -1,18 +1,28 @@
 {% extends "layout.html" %}
 
-{% block title %} Usage {% endblock %}
+{% block title %}Usage{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='usage_styles.css') }}">
 
-<div class="container">
-    <header class="transparent-black-bg">
-        <h1>Usage</h1>
+<div class="usage-container">
+    <header>
+        <h1>How to Use OpenMath</h1>
     </header>
     
-    <div class="transparent-black-bg">
-        <p class="gradient-text">This app is crafted to assist students in learning mathematics in a personalized way. It uses advanced AI to adapt to each student's learning preferences and habits.</p>
-        <p class="gradient-text">Getting started is straightforward: simply sign in, tell the chatbot about your study preferences and the mathematical topics you're interested in, and begin your learning session.</p>
-        <p class="gradient-text">Remember to create an account and log in so the app can track your progress, save your learning preferences, and tailor future lessons for the most effective learning experience.</p>
+    <div class="usage-cards">
+        <a href="/learn" class="usage-card">
+            <h2>Get Started</h2>
+            <p>Sign in, set up your profile, and start exploring various mathematical topics and interactive lessons tailored to your preferences.</p>
+        </a>
+        <a href="/profile" class="usage-card">
+            <h2>Personalized Learning</h2>
+            <p>Our advanced AI analyzes your learning style and adapts the curriculum in real-time to fit your pace and preferences.</p>
+        </a>
+        <a href="/profile" class="usage-card">
+            <h2>Track Your Progress</h2>
+            <p>Create an account to save your progress, set learning goals, and review past performances to enhance your learning experience.</p>
+        </a>
     </div>
 </div>
 
