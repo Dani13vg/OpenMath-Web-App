@@ -13,7 +13,7 @@ header h1 {
 
   .transparent-black-bg {
     background-color: rgba(76, 76, 76, 0.5); /* Black with 50% opacity */
-    color: white; /* Ensures text is light on the dark background */
+    color: rgb(255, 255, 255); /* Ensures text is light on the dark background */
     text-align: center; /* Center text */
   }
 
@@ -62,7 +62,7 @@ body, html {
     max-width: 500px; /* this is the width of the div */
     margin: 0 auto; /* this will center the div */
     border-radius: 10px; /* this will give the div rounded corners */
-    border: 2px solid white; /* this will give the div a 2px white border */
+    border: 2px solid rgb(45, 8, 211); /* this will give the div a 2px white border */
     background: transparent; /* this will give the div a transparent background */
     backdrop-filter: blur(8px);  /* this will give the div a blur effect */
     text-align: center; /* this will center the text in the div */

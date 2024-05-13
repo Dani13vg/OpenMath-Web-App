@@ -1,68 +1,68 @@
-/* index_styles.css */
-body, html {
-    font-family: 'Arial', sans-serif;
-    background: #f0f4f8; /* Softer background color */
-}
-
-.container {
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Full viewport height */
     text-align: center;
-    padding: 50px 20px;
+    background: linear-gradient(to right, #6a11cb, #2575fc); /* Aesthetic gradient background */
+    color: white;
+    font-family: 'Arial', sans-serif;
 }
 
-header.transparent-black-bg h1 {
-    font-size: 48px; /* Smaller, more modern font size */
-    font-weight: bold;
-    color: #4A90E2; /* Soft blue instead of gradient */
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.2); /* Subtle text shadow for depth */
-}
-
-.logo-image {
-    width: 30%; /* Adjust based on preference */
+.home-header {
     margin-bottom: 30px;
 }
 
+.logo-image {
+    width: 512px; /* Adjust size as needed */
+    height: auto;
+    margin-bottom: 20px;
+}
+
+h1 {
+    margin-bottom: 10px;
+    font-size: 2.5rem;
+    /* font-weight: 600; */
+    font-style: italic;
+    font-weight: 300;
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 200;
+}
+
+.home-actions {
+    display: flex;
+    gap: 20px; /* Space between buttons */
+}
+
 .btn {
+    text-decoration: none;
+    color: white;
+    background: #007bff;
     padding: 10px 20px;
     border-radius: 5px;
-    text-transform: uppercase;
-    font-weight: bold;
-    transition: background-color 0.3s, color 0.3s;
+    border: none;
+    transition: background-color 0.3s;
 }
 
-.btn-secondary {
-    background-color: #6C7A89; /* Flat gray */
-    color: white;
-}
-
-.btn-primary {
-    background-color: #3498db; /* Flat blue */
-    color: white;
+.btn-action {
+    font-size: 1.2rem; /* Larger font for important actions */
+    padding: 12px 24px; /* Slightly larger padding */
 }
 
 .btn:hover {
-    opacity: 0.8;
+    background: #0056b3; /* Darker shade on hover */
 }
 
-.navbar {
-    background-color: #0052a4; /* Adjust the navbar background color if needed */
-    padding: 10px 20px;
-}
+@media (max-width: 600px) {
+    .home-actions {
+        flex-direction: column;
+    }
 
-.navbar-brand img {
-    height: 40px; /* Ensure the logo is not too large */
+    .btn-action {
+        width: 100%; /* Full width buttons on small screens */
+    }
 }
-
-.navbar-nav {
-    margin-left: auto; /* Pushes the nav links to the right side of the navbar */
-}
-
-.nav-link {
-    color: #007bff; /* Bootstrap primary color for links */
-    margin-right: 20px; /* Space between links */
-}
-
-.nav-link:hover {
-    color: #0056b3; /* Darker blue on hover for better visibility */
-}
-
-/* Footer and additional styles as needed */

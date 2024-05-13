@@ -1,20 +1,19 @@
 {% extends "layout.html" %}
 
-{% block title %} Home {% endblock %}
+{% block title %}Home{% endblock %}
 
 {% block content %}
-<link href="{{ url_for('static', filename='index_styles.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='index_styles.css') }}">
 
-<div class="container">
-    <header class="transparent-black-bg">
-        <h1>Welcome to the OpenMath App</h1>
-    </header>
-        
-    <img src="{{ url_for('static', filename='/images/openmath_logo-1024.png') }}" class="logo-image">
-
-    <div class="mt-4 d-flex justify-content-center">
-        <a href="{{ url_for('register') }}" class="btn btn-secondary me-3">Register</a>
-        <a href="{{ url_for('login') }}" class="btn btn-primary">Log In</a>
+<div class="home-container">
+    <div class="home-header">
+        <h1>Welcome to OpenMath</h1>
+        <img src="{{ url_for('static', filename='images/nobackground.png') }}" alt="OpenMath Logo" class="logo-image">
+        <h2>Personalize Your Math Learning Journey</h2>
+    </div>
+    <div class="home-actions">
+        <a href="{{ url_for('register') }}" class="btn btn-action">Register</a>
+        <a href="{{ url_for('login') }}" class="btn btn-action">Log In</a>
     </div>
 </div>
 

@@ -4,10 +4,12 @@
     flex-wrap: wrap; /* This will allow cards to move to the next line on smaller screens */
     justify-content: space-around; /* This will distribute space around items evenly */
     align-items: center;
+    
     padding: 20px; /* Adds space around the container */
     gap: 20px; /* Adds space between cards */
     /*margin: 0 auto; /* Centers the container, to put it full to the left, remove this line */
-    width: 100%; /* Ensures the container uses full width */
+    /*width: 100%; /* Ensures the container uses full width */
+    max-width: 2000px; /* Limits the container's width */
 }
 
 
