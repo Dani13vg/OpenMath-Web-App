@@ -37,7 +37,7 @@
 }
 
 #chat-form button {
-    padding: 10px 20px;
+    padding: 0px 5px;
     background-color: #00796b;
     color: white;
     border: none;
@@ -93,4 +93,24 @@
 
 .model-response p {
     margin-bottom: 10px; /* Adjust spacing between paragraphs */
+}
+
+.chat-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+
+.chat-table th, .chat-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+.chat-table th {
+    background-color: #f4f4f4;
+}
+
+.chat-table td {
+    background-color: #fff;
 }

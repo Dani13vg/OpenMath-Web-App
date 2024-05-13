@@ -10,7 +10,7 @@
     </div>
     <form id="chat-form" onsubmit="sendMessage(event)">
         <input type="text" id="user-input" placeholder="Type your question..." autocomplete="off">
-        <button type="submit"><b>→</b></button>
+        <button type="submit"><img src="{{ url_for('static', filename='images/nobackground.png') }}" alt="OpenMath Logo" class="logo-image" style="width: 40px; height: 40px;"></button>
     </form>
 </div>
 
@@ -25,15 +25,70 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+
+function renderTableFromString(tableString) {
+    let rows = tableString.trim().split('\n');
+    let html = '<table class="chat-table">'; // Begin table
+    rows.forEach((row, index) => {
+        let columns = row.split('|').filter(col => col.trim() !== '');
+        html += index === 0 ? '<thead><tr>' : '<tr>'; // Use thead for the header row
+        columns.forEach(col => {
+            // Apply bold formatting to all columns, headers, and data
+            let formattedColumn = col.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+            html += index === 0 ? `<th>${formattedColumn}</th>` : `<td>${formattedColumn}</td>`; // Use th for headers and td for data
+        });
+        html += index === 0 ? '</tr></thead><tbody>' : '</tr>'; // Close thead and open tbody after the header row
+    });
+    html += '</tbody></table>'; // End table
+    return html;
+}
+
+function formatChatResponse(response) {
+    let paragraphs = response.split('\n\n');
+    let formattedResponse = '';
+
+    paragraphs.forEach(paragraph => {
+        if (paragraph.trim().startsWith('|')) {
+            // Handle tables
+            formattedResponse += renderTableFromString(paragraph);
+        } else {
+            // Detect if the paragraph contains list items
+            const listRegex = /^\d+\.\s|\*\s/gm; // Matches numbers followed by dots or "* " for list items
+            if (listRegex.test(paragraph)) {
+                // Transform lines into list items
+                let listItems = paragraph.split('\n').map(item => {
+                    if (item.match(listRegex)) {
+                        return `<li>${item.replace(listRegex, '').trim()
+                            .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') // Bold
+                            .replace(/\*(.+?)\*/g, '<em>$1</em>')             // Italics
+                            .replace(/`(.+?)`/g, '<code>$1</code>')          // Code
+                            }</li>`;
+                    }
+                    return item; // return the item as is if it doesn't match
+                }).join('');
+                formattedResponse += `<ul>${listItems}</ul>`;
+            } else {
+                // Handle regular paragraphs
+                formattedResponse += `<p>${paragraph
+                    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') // Bold
+                    .replace(/\*(.+?)\*/g, '<em>$1</em>')             // Italics
+                    .replace(/`(.+?)`/g, '<code>$1</code>')          // Code
+                    }</p>`;
+            }
+        }
+    });
+    return formattedResponse;
+}
+
+
 function sendMessage(event) {
     event.preventDefault();
     const userInputField = document.getElementById('user-input');
     const chatBox = document.getElementById('chat-box');
 
-    // Create user message element
     let userMessage = document.createElement('div');
     userMessage.className = 'user-message';
-    userMessage.textContent = `You: ${userInputField.value}`;
+    userMessage.innerHTML = `You: ${userInputField.value}`; // Use innerHTML to preserve formatting if needed
     chatBox.appendChild(userMessage);
 
     fetch('/chat/send', {
@@ -49,28 +104,13 @@ function sendMessage(event) {
     .then(data => {
         let botResponse = document.createElement('div');
         botResponse.className = 'model-response';
-
-        // Handle paragraphs and basic markdown-like formatting
-        let formattedResponse = data.response
-            .split('\n\n') // Split response into paragraphs on double newlines
-            .map(paragraph => {
-                return '<p>' + paragraph
-                    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') // Bold
-                    .replace(/\*(.+?)\*/g, '<em>$1</em>')             // Italics
-                    .replace(/`(.+?)`/g, '<code>$1</code>')          // Code
-                    + '</p>';
-            })
-            .join(''); // Join all paragraphs back into a single string
-
-        botResponse.innerHTML = formattedResponse;
+        botResponse.innerHTML = formatChatResponse(data.response);
         chatBox.appendChild(botResponse);
         userInputField.value = '';
-        chatBox.scrollTop = chatBox.scrollHeight;
+        chatBox.scrollTop = chatBox.scrollHeight; // Ensure the latest messages are visible
     })
     .catch(error => console.error('Error:', error));
 }
-
-
 
 </script>
 
