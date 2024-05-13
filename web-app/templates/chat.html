@@ -10,7 +10,7 @@
     </div>
     <form id="chat-form" onsubmit="sendMessage(event)">
         <input type="text" id="user-input" placeholder="Type your question..." autocomplete="off">
-        <button type="submit"><img src="{{ url_for('static', filename='images/nobackground.png') }}" alt="OpenMath Logo" class="logo-image" style="width: 40px; height: 40px;"></button>
+        <button type="submit"><img src="{{ url_for('static', filename='images/arrow.webp') }}" alt="OpenMath Logo" class="logo-image" style="width: 40px; height: 40px;"></button>
     </form>
 </div>
 
@@ -88,7 +88,7 @@ function sendMessage(event) {
 
     let userMessage = document.createElement('div');
     userMessage.className = 'user-message';
-    userMessage.innerHTML = `You: ${userInputField.value}`; // Use innerHTML to preserve formatting if needed
+    userMessage.innerHTML = `${userInputField.value}`; // Use innerHTML to preserve formatting if needed
     chatBox.appendChild(userMessage);
 
     fetch('/chat/send', {

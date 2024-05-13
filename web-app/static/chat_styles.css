@@ -1,6 +1,6 @@
 /*Chat container styles */
 .chat-container {
-    width: 90%;
+    width: 95%;
     margin: 20px auto;
     border: 1px solid #d0e2df;
     background-color: #f4f7f6;
@@ -23,7 +23,7 @@
 #chat-form {
     position: absolute;
     bottom: 10px;
-    width: 100%;
+    width: 97.8%;
     display: flex;
     padding: 0 10px;
 }
