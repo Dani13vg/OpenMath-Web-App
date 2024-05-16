@@ -129,11 +129,14 @@ input[type="checkbox"]:checked + .checkbox-label {
     display: flex;
     align-items: center;
     gap: 10px;
-    justify-content: center;
+    justify-content: space-between;
 }
 
-.learning-preference label {
-    font-size: 1.1em;
+.learning-value {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 1.2em;
+    color: #333;
 }
 
 #preference_value {
@@ -142,6 +145,8 @@ input[type="checkbox"]:checked + .checkbox-label {
     margin-left: 10px;
 }
 
-input[type="range"] {
-    flex: 1;
+.topics-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 }

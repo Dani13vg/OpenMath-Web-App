@@ -38,9 +38,14 @@
         <div class="form-section">
             <h2>Learning Preferences</h2>
             <div class="learning-preference">
-                <label for="learning_preference">Practice <span id="preference_value">{{ user.learning_preference }}%</span> Theory</label>
+                <label for="learning_preference"><h2>Theory</h2></label>
                 <input type="range" id="learning_preference" name="learning_preference" min="0" max="100" value="{{ user.learning_preference }}">
+                <label for="learning_preference"><h2>Practice</h2></label>
             </div>
+            <!--<div class="learning-value">
+                <span id="preference_value">{{ user.learning_preference }}% Theory, {{ 100 - user.learning_preference }}% Practice</span>
+            </div>
+        -->
         </div>
 
         <div class="form-group">
@@ -51,7 +56,9 @@
 
 <script>
 document.getElementById('learning_preference').addEventListener('input', function() {
-    document.getElementById('preference_value').textContent = this.value + '%';
+    let theoryValue = 100 - this.value;
+    let practiceValue = 100-theoryValue;
+    //document.getElementById('preference_value').textContent = theoryValue + '% Theory    and              ' + practiceValue + '% Practice';
 });
 </script>
 
