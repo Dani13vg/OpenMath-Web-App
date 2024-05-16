@@ -37,14 +37,12 @@ def after_request(response):
 @app.route("/")
 def index():
     """Show index page"""
-
     return render_template("index.html")
 
 @app.route("/myplan")
 def myplan():
     """Show subscription plans page"""
     return render_template("myplan.html")
-
 
 @app.route("/usage")
 def usage():
@@ -59,18 +57,16 @@ def contact():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
-
     # Forget any user_id
     session.clear()
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
         # Ensure username was submitted
-
         username = request.form.get("username")
         password = request.form.get("password")
 
-        # Enusre username and password were submitted
+        # Ensure username and password were submitted
         if not username or not password:
             flash("Must provide username and password", "warning")
             return render_template("login.html")
@@ -98,7 +94,6 @@ def login():
 @app.route("/logout")
 def logout():
     """Log user out"""
-
     # Forget any user_id
     session.clear()
 
@@ -148,7 +143,7 @@ def register():
 
         # Redirect user to the form page to continue registration process
         flash("You have successfully registered. Please complete your profile.")
-        return redirect(url_for("form"))
+        return redirect(url_for("profile"))
     else:
         return render_template("register.html")
 
@@ -193,6 +188,11 @@ def profile():
         age = request.form['age']
         likes = ','.join(request.form.getlist('likes'))
         learning_preference = request.form['learning_preference']
+
+        # Check for new interests
+        new_interest = request.form.get('new_interest')
+        if new_interest:
+            likes += f",{new_interest}"
 
         try:
             cursor.execute("UPDATE users SET username = ?, age = ?, likes = ?, learning_preference = ? WHERE id = ?", 
