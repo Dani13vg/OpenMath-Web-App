@@ -40,6 +40,12 @@ def index():
 
     return render_template("index.html")
 
+@app.route("/myplan")
+def myplan():
+    """Show subscription plans page"""
+    return render_template("myplan.html")
+
+
 @app.route("/usage")
 def usage():
     """Show usage page"""

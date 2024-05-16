@@ -1,0 +1,161 @@
+/* Adding a cool, moving background */
+body {
+    background: linear-gradient(-45deg, #00c6ff, #0072ff, #d9a7c7, #ffeb3b);
+    background-size: 400% 400%;
+    animation: gradientBackground 15s ease infinite;
+    font-family: 'Arial', sans-serif;
+}
+
+@keyframes gradientBackground {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.plans-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.plans-container h1 {
+    color: #003366;
+    margin-bottom: 20px;
+    font-size: 2.8em;
+    font-weight: bold;
+    text-shadow: 2px 2px #ffeb3b;
+}
+
+.toggle-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.toggle-label {
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    background-color: #ccc;
+    border-radius: 15px;
+    position: relative;
+    cursor: pointer;
+}
+
+.toggle-label::after {
+    content: '';
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    background-color: white;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: 0.3s;
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+input[type="checkbox"]:checked + .toggle-label::after {
+    transform: translateX(30px);
+}
+
+#toggle-text, #toggle-text-yearly {
+    font-size: 18px;
+    font-weight: bold;
+    color: #003366;
+    margin: 0 10px;
+}
+
+.plans {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.plan-card {
+    background-color: #ffffff;
+    border: 2px solid #4a90e2;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: 300px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.plan-card.basic {
+    border-color: #4a90e2;
+    background-color: #e7f0f8;
+}
+
+.plan-card.gold {
+    border-color: #ffd700;
+    background-color: #fff8e1;
+}
+
+.plan-card.platinum {
+    border-color: #f35aeb;
+    background-color: #ffacfb;
+}
+
+.plan-card:hover {
+    transform: scale(1.05);
+}
+
+.plan-card h2 {
+    color: #003366;
+    margin-bottom: 10px;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.plan-card p {
+    color: #333333;
+    margin: 10px 0;
+}
+
+.plan-card .price {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #ff6600;
+}
+
+.plan-card .price span.discount {
+    font-size: 0.8em;
+    color: red;
+    font-weight: bold;
+}
+
+.price-yearly {
+    display: none;
+}
+
+.select-plan {
+    background-color: #ff6600;
+    border: none;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 20px;
+    align-self: center;
+    transition: background-color 0.3s ease;
+}
+
+.select-plan:hover {
+    background-color: #cc5200;
+}

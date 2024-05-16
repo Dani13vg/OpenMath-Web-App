@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='myplan_styles.css') }}">
+
+<div class="plans-container">
+    <h1>Find the Perfect Plan for You!</h1>
+    <div class="toggle-container">
+        <span id="toggle-text">Monthly</span>
+        <input type="checkbox" id="pricing-toggle">
+        <label for="pricing-toggle" class="toggle-label"></label>
+        <span id="toggle-text-yearly">Yearly</span>
+    </div>
+    <div class="plans">
+        <div class="plan-card basic">
+            <h2>Basic Plan</h2>
+            <p class="price">Free</p>
+            <p>Up to 200 explanations per month</p>
+            <button class="select-plan">Select</button>
+        </div>
+        <div class="plan-card gold">
+            <h2>Gold Plan</h2>
+            <p class="price price-monthly">€2.99/month</p>
+            <p class="price price-yearly">€30/year <span class="discount">(Save 16%)</span></p>
+            <p>Up to 500 explanations per month</p>
+            <p><strong>Access to advanced statistics</strong></p>
+            <p><strong>Use of a stronger model (Llama3-70B)</strong></p>
+            <button class="select-plan">Select</button>
+        </div>
+        <div class="plan-card platinum">
+            <h2>Platinum Plan</h2>
+            <p class="price price-monthly">€5/month</p>
+            <p class="price price-yearly">€50/year <span class="discount">(Save 17%)</span></p>
+            <p><strong>Unlimited explanations</strong></p>
+            <p><strong>Access to advanced statistics</strong></p>
+            <p><strong>Problems section</strong></p>
+            <p><strong>Use of a stronger model (Llama3-70B)</strong></p>
+            <button class="select-plan">Select</button>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('pricing-toggle').addEventListener('change', function() {
+    if (this.checked) {
+        document.querySelectorAll('.price-monthly').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('.price-yearly').forEach(el => el.style.display = 'block');
+    } else {
+        document.querySelectorAll('.price-monthly').forEach(el => el.style.display = 'block');
+        document.querySelectorAll('.price-yearly').forEach(el => el.style.display = 'none');
+    }
+});
+</script>
+
+{% endblock %}
