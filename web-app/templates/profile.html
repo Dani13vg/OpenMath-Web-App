@@ -5,7 +5,7 @@
 
 <div class="profile-container">
     <h1>Edit Your Profile</h1>
-    <form method="POST" class="profile-form">
+    <form method="POST" action="/profile" class="profile-form">
         <div class="form-section">
             <h2>Basic Information</h2>
             <div class="form-group">
@@ -29,10 +29,8 @@
                     'Study Skills', 'Virtual Reality', 'Fashion', 'Writing', 'Mental Health', 'Pets', 'Math Games', 
                     'Cultural Festivals', 'History', 'Survival Skills', 'Board Games'
                 ] %}
-                <label class="checkbox-label">
-                    <input type="checkbox" name="likes" value="{{ topic }}" id="like_{{ topic }}" {{ 'checked' if topic in user.likes else '' }}>
-                    {{ topic }}
-                </label>
+                <input type="checkbox" name="likes" value="{{ topic }}" id="like_{{ topic }}" {% if topic in user.likes %}checked{% endif %}>
+                <label class="checkbox-label" for="like_{{ topic }}">{{ topic }}</label>
                 {% endfor %}
             </div>
         </div>

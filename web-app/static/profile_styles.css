@@ -1,5 +1,5 @@
 body {
-    background: linear-gradient(-45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+    background: linear-gradient(-45deg, #c3d808 0%, #41c7f0 99%, #f0a9f7 100%);
     background-size: 400% 400%;
     animation: gradientBackground 15s ease infinite;
     font-family: 'Arial', sans-serif;
@@ -20,6 +20,20 @@ body {
     background: rgba(255, 255, 255, 0.9);
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-container::before, .profile-container::after {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(45deg);
+    z-index: -1;
 }
 
 .profile-container h1 {
@@ -83,6 +97,7 @@ input[type="checkbox"] {
     align-items: center;
     font-size: 14px;
     transition: background-color 0.3s, color 0.3s;
+    margin: 3px;
 }
 
 .checkbox-label:hover {
@@ -114,6 +129,7 @@ input[type="checkbox"]:checked + .checkbox-label {
     display: flex;
     align-items: center;
     gap: 10px;
+    justify-content: center;
 }
 
 .learning-preference label {
@@ -123,4 +139,9 @@ input[type="checkbox"]:checked + .checkbox-label {
 #preference_value {
     font-weight: bold;
     color: #007bff;
+    margin-left: 10px;
+}
+
+input[type="range"] {
+    flex: 1;
 }

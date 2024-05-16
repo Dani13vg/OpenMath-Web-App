@@ -202,7 +202,7 @@ def profile():
         finally:
             conn.close()
 
-        return redirect(url_for('profile'))
+        return redirect(url_for('learn_mathematics'))
     else:
         cursor.execute("SELECT * FROM users WHERE id = ?", (session['user_id'],))
         user = dict(cursor.fetchone())
