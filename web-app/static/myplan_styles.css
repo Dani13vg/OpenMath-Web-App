@@ -107,13 +107,13 @@ input[type="checkbox"]:checked + .toggle-label::after {
 
 .plan-card.platinum {
     border-color: #f35aeb;
-    background-color: #ffacfb;
+    background-color: #fcc6f9;
 }
 
 .plan-card:hover {
     transform: scale(1.05);
 }
-
+/* UPDATE HERE */
 .plan-card h2 {
     color: #003366;
     margin-bottom: 10px;
@@ -129,7 +129,7 @@ input[type="checkbox"]:checked + .toggle-label::after {
 .plan-card .price {
     font-size: 1.5em;
     font-weight: bold;
-    color: #ff6600;
+    color: #000000;
 }
 
 .plan-card .price span.discount {

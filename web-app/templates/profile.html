@@ -20,7 +20,7 @@
 
         <div class="form-section">
             <h2>Interests</h2>
-            <div class="topics-container">
+            <div class="topics-container" id="topics-container">
                 {% for topic in [
                     'Sport', 'Painting', 'Climbing', 'Football', 'Swimming', 'Food', 'Music', 'Dancing', 
                     'Cars', 'Computers', 'Video Games', 'Social Media', 'Coding', 'Movies', 'Science Experiments', 
@@ -32,20 +32,24 @@
                 <input type="checkbox" name="likes" value="{{ topic }}" id="like_{{ topic }}" {% if topic in user.likes %}checked{% endif %}>
                 <label class="checkbox-label" for="like_{{ topic }}">{{ topic }}</label>
                 {% endfor %}
+                {% for custom_topic in user.custom_likes %}
+                <input type="checkbox" name="likes" value="{{ custom_topic }}" id="like_{{ custom_topic }}" checked>
+                <label class="checkbox-label" for="like_{{ custom_topic }}">{{ custom_topic }}</label>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label for="new_interest">Add New Interest</label>
+                <input type="text" id="new_interest" name="new_interest" placeholder="Type a new interest and press Enter">
             </div>
         </div>
 
         <div class="form-section">
             <h2>Learning Preferences</h2>
             <div class="learning-preference">
-                <label for="learning_preference"><h2>Theory</h2></label>
+                <label for="learning_preference">Theory</label>
                 <input type="range" id="learning_preference" name="learning_preference" min="0" max="100" value="{{ user.learning_preference }}">
-                <label for="learning_preference"><h2>Practice</h2></label>
+                <label for="learning_preference">Practice</label>
             </div>
-            <!--<div class="learning-value">
-                <span id="preference_value">{{ user.learning_preference }}% Theory, {{ 100 - user.learning_preference }}% Practice</span>
-            </div>
-        -->
         </div>
 
         <div class="form-group">
@@ -56,9 +60,35 @@
 
 <script>
 document.getElementById('learning_preference').addEventListener('input', function() {
-    let theoryValue = 100 - this.value;
-    let practiceValue = 100-theoryValue;
-    //document.getElementById('preference_value').textContent = theoryValue + '% Theory    and              ' + practiceValue + '% Practice';
+    let theoryValue = this.value;
+    let practiceValue = 100 - theoryValue;
+    document.getElementById('preference_value').textContent = theoryValue + '% Theory, ' + practiceValue + '% Practice';
+});
+
+document.getElementById('new_interest').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        const newInterest = this.value.trim();
+        if (newInterest) {
+            const container = document.getElementById('topics-container');
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.name = 'likes';
+            checkbox.value = newInterest;
+            checkbox.id = 'like_' + newInterest;
+            checkbox.checked = true;
+
+            const label = document.createElement('label');
+            label.className = 'checkbox-label';
+            label.htmlFor = checkbox.id;
+            label.textContent = newInterest;
+
+            container.appendChild(checkbox);
+            container.appendChild(label);
+
+            this.value = '';
+        }
+    }
 });
 </script>
 
