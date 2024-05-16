@@ -157,7 +157,6 @@ def register():
 @login_required
 def form():
     if request.method == "POST":
-        full_name = request.form.get("full_name")
         age = int(request.form.get("age"))  # Ensure age is correctly formatted as integer
         likes = request.form.getlist("likes")  # Retrieves all values from checkboxes named 'likes'
         learning_preference = int(request.form.get("learning_preference"))  # Retrieves the slider value as integer
@@ -167,8 +166,8 @@ def form():
         cursor = conn.cursor()
         try:
             # Update the user's data in the database
-            cursor.execute("UPDATE users SET full_name = ?, age = ?, likes = ?, learning_preference = ? WHERE id = ?", 
-                           (full_name, age, ','.join(likes), learning_preference, session['user_id']))
+            cursor.execute("UPDATE users SET age = ?, likes = ?, learning_preference = ? WHERE id = ?", 
+                           (age, ','.join(likes), learning_preference, session['user_id']))
             conn.commit()
             flash("Information saved successfully!")
         except Exception as e:

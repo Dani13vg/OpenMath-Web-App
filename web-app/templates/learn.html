@@ -3,7 +3,12 @@
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='learn_styles.css') }}">
 
-<div class="custom-div">
+<div class="learn-container">
+    <h1>Explore Mathematics</h1>
+    <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Search for a concept...">
+        <button id="search-button">Search</button>
+    </div>
     <div class="topics-container">
         {% for topic in math_topics %}
         <div class="topic-card">
@@ -15,5 +20,14 @@
         {% endfor %}
     </div>
 </div>
+
+<script>
+document.getElementById('search-button').addEventListener('click', function() {
+    const query = document.getElementById('search-input').value;
+    if (query.trim()) {
+        window.location.href = '/chat/' + encodeURIComponent(query.trim());
+    }
+});
+</script>
 
 {% endblock %}

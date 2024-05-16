@@ -5,7 +5,8 @@
     justify-content: center;
     height: 100vh; /* Full viewport height */
     text-align: center;
-    background: linear-gradient(to right, #6a11cb, #2575fc); /* Aesthetic gradient background */
+    background: linear-gradient(-45deg, #00c6ff, #0072ff, #d9a7c7, #ffeb3b);
+    animation: gradientBackground 15s ease infinite;
     color: white;
     font-family: 'Arial', sans-serif;
 }

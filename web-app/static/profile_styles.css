@@ -1,10 +1,33 @@
+body {
+    background: linear-gradient(-45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+    background-size: 400% 400%;
+    animation: gradientBackground 15s ease infinite;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+@keyframes gradientBackground {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 .profile-container {
     max-width: 960px;
     margin: 40px auto;
     padding: 20px;
-    background: #f8f9fa;
+    background: rgba(255, 255, 255, 0.9);
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     border-radius: 10px;
+}
+
+.profile-container h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
 }
 
 .profile-form {
@@ -18,40 +41,57 @@
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    margin-bottom: 20px;
 }
 
-h1, h2 {
-    color: #0056b3;
+.form-section h2 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
 }
 
 .form-group label {
-    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #666;
 }
 
 input[type="text"], input[type="number"], input[type="range"] {
     width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
+    padding: 10px;
+    border: 2px solid #ddd;
     border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
 }
 
 input[type="checkbox"] {
-    margin-right: 5px;
-}
-
-.topics-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    display: none;
 }
 
 .checkbox-label {
-    background: #e9ecef;
+    background: #e0e0e0;
     border-radius: 20px;
-    padding: 5px 10px;
+    padding: 5px 15px;
     cursor: pointer;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.checkbox-label:hover {
+    background: #d0d0d0;
+}
+
+input[type="checkbox"]:checked + .checkbox-label {
+    background: #007bff;
+    color: white;
 }
 
 .btn-update {
@@ -62,14 +102,25 @@ input[type="checkbox"] {
     color: white;
     cursor: pointer;
     font-size: 16px;
+    display: block;
+    margin: 0 auto;
 }
 
 .btn-update:hover {
     background-color: #0056b3;
 }
 
+.learning-preference {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.learning-preference label {
+    font-size: 1.1em;
+}
+
 #preference_value {
     font-weight: bold;
     color: #007bff;
 }
-

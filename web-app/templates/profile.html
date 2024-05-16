@@ -9,15 +9,11 @@
         <div class="form-section">
             <h2>Basic Information</h2>
             <div class="form-group">
-                <label for="username">Username:</label>
+                <label for="username">Username</label>
                 <input type="text" id="username" name="username" value="{{ user.username }}" required>
             </div>
             <div class="form-group">
-                <label for="full_name">Full Name:</label>
-                <input type="text" id="full_name" name="full_name" value="{{ user.full_name }}">
-            </div>
-            <div class="form-group">
-                <label for="age">Age:</label>
+                <label for="age">Age</label>
                 <input type="number" id="age" name="age" value="{{ user.age }}" required>
             </div>
         </div>
@@ -43,9 +39,10 @@
 
         <div class="form-section">
             <h2>Learning Preferences</h2>
-            <label for="learning_preference"> % Practice - % Theory</label>
-            <input type="range" id="learning_preference" name="learning_preference" min="0" max="100" value="{{ user.learning_preference }}">
-            <span id="preference_value">{{ user.learning_preference }}%</span>
+            <div class="learning-preference">
+                <label for="learning_preference">Practice <span id="preference_value">{{ user.learning_preference }}%</span> Theory</label>
+                <input type="range" id="learning_preference" name="learning_preference" min="0" max="100" value="{{ user.learning_preference }}">
+            </div>
         </div>
 
         <div class="form-group">
@@ -59,6 +56,5 @@ document.getElementById('learning_preference').addEventListener('input', functio
     document.getElementById('preference_value').textContent = this.value + '%';
 });
 </script>
-
 
 {% endblock %}
