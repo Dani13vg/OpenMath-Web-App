@@ -4,9 +4,8 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
-from transformers import BlipProcessor, BlipForConditionalGeneration
 from PIL import Image
-from helpers import login_required, get_db_connection, allowed_file
+from helpers import login_required, get_db_connection
 from groq_api import get_model_response
 
 # Configure application
@@ -16,15 +15,6 @@ app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
-
-# Configure upload folder and allowed extensions for uploaded images
-UPLOAD_FOLDER = os.path.join('static', 'images')
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-# Load the model
-processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-large")
-model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-large")
 
 @app.after_request
 def after_request(response):
