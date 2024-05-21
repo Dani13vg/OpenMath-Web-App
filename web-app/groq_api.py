@@ -38,8 +38,7 @@ def get_model_response(user_input, memory=None, user_data=None):
             "role": "system",
             "content": f"You are talking to a person of {user_data['age']} years old, is a person who likes the following topics: {user_data['likes']} and\
                         prefers {user_data['learning_preference']}% of theory and {100 - user_data['learning_preference']}% of examples and practice in the explanations,\
-                        so respond accordingly. Take into account this information to provide better personalized explanations."
-        })
+                        so respond accordingly. Take into account this information to provide better personalized explanations."}) ## WHEN UPDATED: The preferred language is {user_data['language']}, so respond in {user_data['language']}
     # Append the current user input to the message history
     messages.append({
         "role": "user",

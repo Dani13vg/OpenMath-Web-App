@@ -4,8 +4,9 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
+from transformers import BlipProcessor, BlipForConditionalGeneration
 from PIL import Image
-from helpers import login_required, get_db_connection
+from helpers import login_required, get_db_connection, allowed_file
 from groq_api import get_model_response
 
 # Configure application
@@ -15,6 +16,15 @@ app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
+
+# Configure upload folder and allowed extensions for uploaded images
+UPLOAD_FOLDER = os.path.join('static', 'images')
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Load the model
+processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-large")
+model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-large")
 
 @app.after_request
 def after_request(response):
@@ -27,8 +37,12 @@ def after_request(response):
 @app.route("/")
 def index():
     """Show index page"""
-
     return render_template("index.html")
+
+@app.route("/myplan")
+def myplan():
+    """Show subscription plans page"""
+    return render_template("myplan.html")
 
 @app.route("/usage")
 def usage():
@@ -43,18 +57,16 @@ def contact():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
-
     # Forget any user_id
     session.clear()
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
         # Ensure username was submitted
-
         username = request.form.get("username")
         password = request.form.get("password")
 
-        # Enusre username and password were submitted
+        # Ensure username and password were submitted
         if not username or not password:
             flash("Must provide username and password", "warning")
             return render_template("login.html")
@@ -82,7 +94,6 @@ def login():
 @app.route("/logout")
 def logout():
     """Log user out"""
-
     # Forget any user_id
     session.clear()
 
@@ -132,16 +143,16 @@ def register():
 
         # Redirect user to the form page to continue registration process
         flash("You have successfully registered. Please complete your profile.")
-        return redirect(url_for("form"))
+        return redirect(url_for("profile"))
     else:
         return render_template("register.html")
 
-
+#FORM IS NOT USED IN THIS VERSION OF THE APP
+'''
 @app.route("/form", methods=["GET", "POST"])
 @login_required
 def form():
     if request.method == "POST":
-        full_name = request.form.get("full_name")
         age = int(request.form.get("age"))  # Ensure age is correctly formatted as integer
         likes = request.form.getlist("likes")  # Retrieves all values from checkboxes named 'likes'
         learning_preference = int(request.form.get("learning_preference"))  # Retrieves the slider value as integer
@@ -151,8 +162,8 @@ def form():
         cursor = conn.cursor()
         try:
             # Update the user's data in the database
-            cursor.execute("UPDATE users SET full_name = ?, age = ?, likes = ?, learning_preference = ? WHERE id = ?", 
-                           (full_name, age, ','.join(likes), learning_preference, session['user_id']))
+            cursor.execute("UPDATE users SET age = ?, likes = ?, learning_preference = ? WHERE id = ?", 
+                           (age, ','.join(likes), learning_preference, session['user_id']))
             conn.commit()
             flash("Information saved successfully!")
         except Exception as e:
@@ -166,7 +177,7 @@ def form():
     else:
         # Render the form page if the request is GET
         return render_template("form.html")
-
+'''
 
 @app.route("/profile", methods=["GET", "POST"])
 @login_required
@@ -179,15 +190,20 @@ def profile():
         likes = ','.join(request.form.getlist('likes'))
         learning_preference = request.form['learning_preference']
 
+        # Check for new interests
+        new_interest = request.form.get('new_interest')
+        if new_interest:
+            likes += f",{new_interest}"
+
         try:
-            cursor.execute("UPDATE users SET username = ?, age = ?, likes = ?, learning_preference = ? WHERE id = ?",
+            cursor.execute("UPDATE users SET username = ?, age = ?, likes = ?, learning_preference = ? WHERE id = ?", 
                            (username, age, likes, learning_preference, session['user_id']))
             conn.commit()
             flash("Profile updated successfully", "info")
         finally:
             conn.close()
 
-        return redirect(url_for('profile'))
+        return redirect(url_for('learn_mathematics'))
     else:
         cursor.execute("SELECT * FROM users WHERE id = ?", (session['user_id'],))
         user = dict(cursor.fetchone())
@@ -222,31 +238,22 @@ def chat(topic):
         user_input = request.form['user_input']
         conn = get_db_connection("users.db")
         cursor = conn.cursor()
-
-        # Update chats_opened if this is the first message in this chat session
-        if 'chat_opened' not in session:
-            cursor.execute("UPDATE users SET chats_opened = chats_opened + 1 WHERE id = ?", (session['user_id'],))
-            conn.commit()
-            session['chat_opened'] = True
-
-        # Increment the requests_made count
-        cursor.execute("UPDATE users SET requests_made = requests_made + 1 WHERE id = ?", (session['user_id'],))
-        conn.commit()
-
         user_data = cursor.execute("SELECT * FROM users WHERE id = ?", (session['user_id'],)).fetchone()
 
         if user_data:
             user_data = dict(user_data)
-
+            
         # Initialize or retrieve history from session
         if 'history' not in session:
             session['history'] = []
-
+        
         if user_input == "":
             return jsonify({'response': "Please enter a message."})
-
+        
         # Generate a response using the updated function with memory
         response = get_model_response(user_input, session['history'], user_data)
+
+       
 
         # Save user input and bot response to session for memory
         session['history'].append({'role': 'user', 'content': user_input})
