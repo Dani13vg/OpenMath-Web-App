@@ -4,7 +4,6 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
-from transformers import BlipProcessor, BlipForConditionalGeneration
 from PIL import Image
 from helpers import login_required, get_db_connection, allowed_file
 from groq_api import get_model_response
@@ -16,15 +15,6 @@ app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
-
-# Configure upload folder and allowed extensions for uploaded images
-UPLOAD_FOLDER = os.path.join('static', 'images')
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-# Load the model
-processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-large")
-model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-large")
 
 @app.after_request
 def after_request(response):
@@ -240,6 +230,16 @@ def chat(topic):
         cursor = conn.cursor()
         user_data = cursor.execute("SELECT * FROM users WHERE id = ?", (session['user_id'],)).fetchone()
 
+        # Update chats_opened if this is the first message in this chat session
+        if 'chat_opened' not in session:
+            cursor.execute("UPDATE users SET chats_opened = chats_opened + 1 WHERE id = ?", (session['user_id'],))
+            conn.commit()
+            session['chat_opened'] = True
+
+        # Increment the requests_made count
+        cursor.execute("UPDATE users SET requests_made = requests_made + 1 WHERE id = ?", (session['user_id'],))
+        conn.commit()
+
         if user_data:
             user_data = dict(user_data)
             
@@ -252,8 +252,6 @@ def chat(topic):
         
         # Generate a response using the updated function with memory
         response = get_model_response(user_input, session['history'], user_data)
-
-       
 
         # Save user input and bot response to session for memory
         session['history'].append({'role': 'user', 'content': user_input})

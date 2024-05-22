@@ -95,4 +95,9 @@ document.getElementById('new_interest').addEventListener('keypress', function(e)
 });
 </script>
 
+<div class="form-section">
+    <h2>User Stats</h2>
+    <p>Number of Chats Opened: {{ user.chats_opened }}</p>
+    <p>Number of Requests Made: {{ user.requests_made }}</p>
+</div>
 {% endblock %}
