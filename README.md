@@ -1,6 +1,8 @@
 # OpenMath-Web-App
 
-![OpenMath Logo](nobackground.png)
+<p align="center">
+    <img src="https://github.com/Dani13vg/OpenMath-Web-App/blob/main/Web-Screenshots/nobackground_icon.png" alt="OpenMath Logo" width="200"/>
+</p>
 
 Welcome to **OpenMath-Web-App** - a web application combined with the power of LLMs designed to provide students and learners with a personalized and engaging mathematical learning experience.
 
@@ -72,13 +74,13 @@ To get started with OpenMath-Web-App, follow these steps:
 
 ## Screenshots
 
-![Home Page](screenshots/home_page.png)
+![Home Page](https://github.com/Dani13vg/OpenMath-Web-App/blob/main/Web-Screenshots/home_page.png)
 *Home Page to register and login*
 
-![Profile Section](screenshots/profile_section.png)
+![Profile Section](https://github.com/Dani13vg/OpenMath-Web-App/blob/main/Web-Screenshots/profile1.png)
 *Profile Section where users set up their likes and preferences*
 
-![Learning Page](screenshots/learning_page.png)
+![Learning Page](https://github.com/Dani13vg/OpenMath-Web-App/blob/main/Web-Screenshots/topics_collection.png)
 *Collection of topics that the users can choose to start learning*
 
 ## Contributing
