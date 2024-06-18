@@ -12,7 +12,6 @@ Welcome to **OpenMath-Web-App** - a web application combined with the power of L
 - [Usage](#usage)
 - [Screenshots](#screenshots)
 - [Contributing](#contributing)
-- [License](#license)
 - [Contact](#contact)
 
 ## About OpenMath
@@ -39,17 +38,17 @@ To get started with OpenMath-Web-App, follow these steps:
 
 2. **Install Dependencies**
 
-In your virtual environment:
+    In your virtual environment:
 
-    ```bash
+    ```
     pip install -r requirements
     ```
 
 3. **Set the environemnt variable 'GROQ_API_KEY':**
 
-For this you will need to get your own api key from the [groq platform](https://console.groq.com/keys) and export it in the following way:
+    For this you will need to get your own api key from the [groq platform](https://console.groq.com/keys) and export it in the following way:
 
-    ```bash
+    ```
     export GROQ_API_KEY='YOUR_API_KEY'
     ```
 
@@ -108,18 +107,15 @@ We welcome contributions from the community! If you would like to contribute to 
 
 5. **Create a Pull Request**
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Contact
 
 For any inquiries, suggestions, or feedback, please reach out to us at:
 
-- **Neil de la Fuente** - neil@example.com
-- **Paula Feliu** - paula@example.com
-- **Roger Garcia** - roger@example.com
-- **Daniel Vidal** - daniel@example.com
-- **Ana Sofia Vega** - ana@example.com
+- [**Neil de la Fuente**](https://www.linkedin.com/in/neil-de-la-fuente/) - neildlf@gmail.com
+- [**Paula Feliu**](https://www.linkedin.com/in/paula-feliu-criado/) - p.feliu12@gmail.com
+- [**Roger Garcia**](https://www.linkedin.com/in/roger-garcia-ca%C3%B1o-94657a153/) - rogergarciacanyo@gmail.com
+- [**Daniel Vidal**](https://www.linkedin.com/in/daniel-alejandro-vidal-guerra-21386b266/) - danielvidal130602@gmail.com
+- **Ana Sofia Vega** - ansoveloz@gmail.com
 
 Feel free to explore, learn, and contribute to making math education more personalized and engaging for everyone with **OpenMath-Web-App**!
