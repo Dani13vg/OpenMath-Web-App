@@ -6,6 +6,9 @@
 
 Welcome to **OpenMath-Web-App** - a web application combined with the power of LLMs designed to provide students and learners with a personalized and engaging mathematical learning experience.
 
+![ezgif-2-3b39128422](https://github.com/user-attachments/assets/665311ad-3343-4f97-a8ba-66b38874aa39)
+
+
 ## Table of Contents
 
 - [About OpenMath](#about-openmath)
